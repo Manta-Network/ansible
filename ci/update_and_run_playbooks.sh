@@ -57,10 +57,11 @@ cd ${PLAYBOOK_PATH}
 # update playbooks
 git pull > /tmp/ansible-pull.log
 
-list=( $(yq -r '.[] | @base64' ${PLAYBOOK_PATH}/ci/autorun.yml) )
+list=( $(/usr/local/bin/yq -r '.[] | @base64' ${PLAYBOOK_PATH}/ci/autorun.yml) )
 for x in ${list[@]}; do
   playbook=$(_decode_property ${x} .playbook)
   template=$(_decode_property ${x} .template)
+
   # when template has changed, run playbook
   if grep -q "${template}" /tmp/ansible-pull.log; then
     ansible-playbook ${playbook}.yml
