@@ -1,5 +1,5 @@
 - name: set authkeys
-  hosts: XXXX
+  hosts: xxx
   vars:
     ansible_python_interpreter: /usr/bin/python3
   roles:
