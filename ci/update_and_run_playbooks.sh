@@ -65,5 +65,7 @@ for x in ${list[@]}; do
   # when template has changed, run playbook
   if grep -q "${template}" /tmp/ansible-pull.log; then
     ansible-playbook ${playbook}.yml
+  else
+    echo "playbook: ${playbook} skipped. no change detected for template: ${template}"
   fi
 done
