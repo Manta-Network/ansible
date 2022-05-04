@@ -1,0 +1,4 @@
+---
+-
+  playbook: authkeys
+  template: authorized_keys
