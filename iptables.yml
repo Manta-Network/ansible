@@ -1,0 +1,6 @@
+- name: set iptables rules
+  hosts: XXXX
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - role: iptables

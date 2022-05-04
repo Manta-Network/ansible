@@ -1,0 +1,3 @@
+- name: set iptable rules anti DDoS
+  raw: iptables -F && iptables -X && iptables -A INPUT -p tcp --syn --dport 443 -m connlimit --connlimit-above 100 -j REJECT --reject-with tcp-reset
+  become: yes

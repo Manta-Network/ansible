@@ -1,0 +1,11 @@
+- name: install correct manta version
+  apt:
+    name:
+      - manta=3.1.5
+    state: present
+    update_cache: yes
+    force: True
+  become: yes
+- name: start manta
+  raw: systemctl start manta
+  become: yes
