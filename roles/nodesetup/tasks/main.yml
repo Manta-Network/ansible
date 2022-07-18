@@ -1,9 +1,10 @@
 - name: setup manta repo
   raw: curl -o /usr/share/keyrings/manta.gpg https://deb.manta.systems/manta.gpg && curl -o /etc/apt/sources.list.d/manta.list https://deb.manta.systems/manta.list && apt update
 
-- name: install "manta" package
-  ansible.builtin.apt:
-    name: manta
+- name: install manta
+  apt:
+    name:
+      - manta=3.1.5
     state: present
 
 - name: start and enable "{{ chain }}" service
