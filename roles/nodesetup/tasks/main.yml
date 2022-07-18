@@ -7,7 +7,7 @@
     state: present
 
 - name: start and enable "{{ chain }}" service
-  raw: systemctl enable --now "{{ chain }}.service"
+  raw: systemctl enable --now {{ chain }}.service"
 
 - name: install "nginx" package
   ansible.builtin.apt:

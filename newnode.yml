@@ -4,6 +4,7 @@
     ansible_python_interpreter: /usr/bin/python3
   roles:
     - role: nodesetup
+    - role: zabbix
 
 - name: dns
   hosts: test

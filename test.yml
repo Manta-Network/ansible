@@ -1,6 +1,6 @@
-- name: certs setup
-  hosts: test
+- name: dns
+  hosts: todeploy
   vars:
     ansible_python_interpreter: /usr/bin/python3
   roles:
-    - role: certs
+    - role: test

@@ -31,6 +31,12 @@
     dest=/etc/nginx/sites-enabled/default
   when: chain == "calamari"
 
+- name: copy over default dolphin nginx config
+  template: owner=root group=root mode=644
+    src=nginx/default_calamari
+    dest=/etc/nginx/sites-enabled/default
+  when: chain == "dolphin"
+
 - name: copy over nginx status config
   template: owner=root group=root mode=644
     src=nginx/status

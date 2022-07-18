@@ -1,0 +1,15 @@
+- name: setup zabbix repo
+   raw: wget https://repo.zabbix.com/zabbix/6.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_6.2-1+ubuntu20.04_all.deb && dpkg -i zabbix-release_6.2-1+ubuntu20.04_all.deb && apt update && rm zabbix-release_6.2-1+ubuntu20.04_all.deb
+
+- name: install "zabbix" package
+  ansible.builtin.apt:
+    name: zabbix-agent2
+    state: present
+
+- name: copy over zabix config
+  template: owner=root group=root mode=644
+    src=zabbix_agent2.conf
+    dest=/etc/zabbix/zabbix_agent2.conf
+
+- name: restart agent
+   raw: systemctl restart zabbix-agent2

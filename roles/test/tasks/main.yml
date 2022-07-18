@@ -17,5 +17,7 @@
 #  vars:
 #      ansible_python_interpreter: /usr/bin/python3
 
-- name: cert creation
-  raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.manta.systems"  -m  ops@manta.network  --redirect
+#- name: cert creation
+#  raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.manta.systems"  -m  ops@manta.network  --redirect
+- name: start and enable "{{ group_names[0] }}" service
+  raw: echo "{{ group_names[0] }}.service" > /tmp/test
