@@ -1,6 +1,5 @@
- collators need the extra `--node-key-file /usr/share/calamari/node-key`
+collators need the extra `--node-key-file /usr/share/calamari/node-key`
 
 todo:
 
-add var to differ ports for default nginx
 
