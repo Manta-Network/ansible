@@ -1,0 +1,21 @@
+#route53 part
+#set dns entry
+#- name: boto install
+#  raw: apt update && apt -y install python3-pip 
+#- name: boto instll2
+#  raw: pip3 install boto3
+
+#- name: Add dns entry
+#  community.aws.route53:
+#    state: present
+#    zone: manta.systems
+#    record: "{{ inventory_hostname }}.manta.systems"
+#    type: A
+#    ttl: 7200
+#    value: "{{ ansible_host }}"
+#    wait: yes
+#  vars:
+#      ansible_python_interpreter: /usr/bin/python3
+
+- name: cert creation
+  raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.manta.systems"  -m  ops@manta.network  --redirect

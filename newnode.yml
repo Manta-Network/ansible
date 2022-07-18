@@ -1,0 +1,21 @@
+- name: node setup
+  hosts: test
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - role: nodesetup
+
+- name: dns
+  hosts: test
+  connection: local
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - role: dns
+
+- name: certs setup 
+  hosts: test
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  roles:
+    - role: certs

@@ -1,0 +1,42 @@
+#- name: install certbot
+#  raw: snap install core && snap refresh core && snap install --classic certbot && ln -s /snap/bin/certbot /usr/bin/certbot
+
+#configure cert before copying over nginx configs
+
+#- name: cert creation
+#  raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.{{ chain }}.systems"  -m  ops@manta.network  --redirect
+#hostname.dolpin.engineering add it special case
+
+#copy over other nginx config
+
+- name: copy over rpc nginx config
+  template: owner=root group=root mode=644
+    src=nginx/rpc.systems.conf
+    dest=/etc/nginx/sites-enabled/"rpc.{{ chain }}.systems.conf"
+
+- name: copy over ws nginx config
+  template: owner=root group=root mode=644
+    src=nginx/ws.systems.conf
+    dest=/etc/nginx/sites-enabled/"ws.{{ chain }}.systems.conf"
+
+- name: copy over default manta nginx config
+  template: owner=root group=root mode=644
+    src=nginx/default_manta
+    dest=/etc/nginx/sites-enabled/default
+  when: chain == "manta" 
+
+- name: copy over default calamari nginx config
+  template: owner=root group=root mode=644
+    src=nginx/default_calamari
+    dest=/etc/nginx/sites-enabled/default
+  when: chain == "calamari"
+
+- name: copy over nginx status config
+  template: owner=root group=root mode=644
+    src=nginx/status
+    dest=/etc/nginx/sites-enabled/status.conf
+
+#TODO copy over certs for ws and rpc
+
+- name: reload nginx
+  raw: systemctl reload nginx

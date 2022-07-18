@@ -1,0 +1,22 @@
+#add ufw rules
+
+- ufw:
+    rule: allow
+    name: OpenSSH
+- ufw:
+    rule: allow
+    name: http
+- ufw:
+    rule: allow
+    name: https
+- ufw:
+    logging: off
+- name: ufw enable
+  raw: ufw enable
+
+#allow zabbix communiation
+- ufw:
+    rule: allow
+    proto: tcp
+    src: zabbix.manta.network
+#later add rule for ssh access from certain IPs only

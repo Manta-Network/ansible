@@ -1,0 +1,21 @@
+- name: setup manta repo
+  raw: curl -o /usr/share/keyrings/manta.gpg https://deb.manta.systems/manta.gpg && curl -o /etc/apt/sources.list.d/manta.list https://deb.manta.systems/manta.list && apt update
+
+- name: install "manta" package
+  ansible.builtin.apt:
+    name: manta
+    state: present
+
+- name: start and enable "{{ chain }}" service
+  raw: systemctl enable --now "{{ chain }}.service"
+
+- name: install "nginx" package
+  ansible.builtin.apt:
+    name: nginx
+    state: present
+
+- name: install "snapd" package
+  ansible.builtin.apt:
+    name: snapd
+    state: present
+
