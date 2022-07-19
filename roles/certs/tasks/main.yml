@@ -5,6 +5,7 @@
 
 - name: cert creation
   raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.{{ chain }}.systems"  -m  ops@manta.network  --redirect
+
 #hostname.dolpin.engineering add it special case
 
 #copy over other nginx config
