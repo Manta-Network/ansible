@@ -1,13 +1,12 @@
 - name: node setup
-  hosts: test
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
+  hosts: todeploy
   roles:
     - role: nodesetup
     - role: zabbix
+    - role: authkeys
 
 - name: dns
-  hosts: test
+  hosts: todeploy
   connection: local
   vars:
     ansible_python_interpreter: /usr/bin/python3
@@ -15,8 +14,6 @@
     - role: dns
 
 - name: certs setup 
-  hosts: test
-  vars:
-    ansible_python_interpreter: /usr/bin/python3
+  hosts: todeploy
   roles:
     - role: certs
