@@ -1,14 +1,21 @@
+- name: update apt
+  raw: apt update
+
+- name: Set hostname
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}.{{ chain }}.systems/"
+
 - name: setup manta repo
   raw: curl -o /usr/share/keyrings/manta.gpg https://deb.manta.systems/manta.gpg && curl -o /etc/apt/sources.list.d/manta.list https://deb.manta.systems/manta.list && apt update
 
 - name: install manta
   apt:
     name:
-      - manta=3.1.5
+      - manta=3.2.0
     state: present
 
 - name: start and enable "{{ chain }}" service
-  raw: systemctl enable --now {{ chain }}.service"
+  raw: systemctl enable --now "{{ chain }}.service"
 
 - name: install "nginx" package
   ansible.builtin.apt:

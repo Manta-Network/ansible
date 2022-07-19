@@ -1,7 +1,7 @@
 - name: install correct manta version
   apt:
     name:
-      - manta=3.1.5
+      - manta=3.2.0
     state: present
     update_cache: yes
     force: True

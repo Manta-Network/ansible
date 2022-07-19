@@ -1,5 +1,7 @@
 - name: node setup
   hosts: todeploy
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   roles:
     - role: nodesetup
     - role: zabbix
@@ -15,5 +17,7 @@
 
 - name: certs setup 
   hosts: todeploy
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
   roles:
     - role: certs

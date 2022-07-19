@@ -1,10 +1,10 @@
-#- name: install certbot
-#  raw: snap install core && snap refresh core && snap install --classic certbot && ln -s /snap/bin/certbot /usr/bin/certbot
+- name: install certbot
+  raw: snap install core && snap refresh core && snap install --classic certbot && ln -s /snap/bin/certbot /usr/bin/certbot
 
 #configure cert before copying over nginx configs
 
-#- name: cert creation
-#  raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.{{ chain }}.systems"  -m  ops@manta.network  --redirect
+- name: cert creation
+  raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.{{ chain }}.systems"  -m  ops@manta.network  --redirect
 #hostname.dolpin.engineering add it special case
 
 #copy over other nginx config
@@ -12,12 +12,12 @@
 - name: copy over rpc nginx config
   template: owner=root group=root mode=644
     src=nginx/rpc.systems.conf
-    dest=/etc/nginx/sites-enabled/"rpc.{{ chain }}.systems.conf"
+    dest=/etc/nginx/sites-enabled/rpc.{{ chain }}.systems.conf
 
 - name: copy over ws nginx config
   template: owner=root group=root mode=644
     src=nginx/ws.systems.conf
-    dest=/etc/nginx/sites-enabled/"ws.{{ chain }}.systems.conf"
+    dest=/etc/nginx/sites-enabled/ws.{{ chain }}.systems.conf
 
 - name: copy over default manta nginx config
   template: owner=root group=root mode=644
@@ -42,7 +42,37 @@
     src=nginx/status
     dest=/etc/nginx/sites-enabled/status.conf
 
-#TODO copy over certs for ws and rpc
+# cp certs
+- name: Copy rpc fullchain ssl
+  ansible.builtin.copy:
+    src: /home/mobula/certs/rpc.calamari.fullchain.pem
+    dest: /etc/ssl/private/rpc.calamari.fullchain.pem
+    owner: root
+    group: root
+    mode: '0644'
+- name: Copy rpc priv key ssl
+  ansible.builtin.copy:
+    src: /home/mobula/certs/rpc.calamari.privkey.pem
+    dest: /etc/ssl/private/rpc.calamari.privkey.pem
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Copy ws fullchain ssl
+  ansible.builtin.copy:
+    src: /home/mobula/certs/ws.calamari.fullchain.pem
+    dest: /etc/ssl/private/ws.calamari.fullchain.pem
+    owner: root
+    group: root
+    mode: '0644'
+- name: Copy ws priv key ssl
+  ansible.builtin.copy:
+    src: /home/mobula/certs/ws.calamari.privkey.pem
+    dest: /etc/ssl/private/ws.calamari.privkey.pem
+    owner: root
+    group: root
+    mode: '0644'
+
 
 - name: reload nginx
   raw: systemctl reload nginx
