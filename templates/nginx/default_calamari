@@ -71,13 +71,13 @@ server {
 
 }
 server {
-    if ($host = ansibletest.manta.systems) {
+    if ($host = {{ inventory_hostname }}.{{ chain }}.systems) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
 	listen 80 ;
 	listen [::]:80 ;
-    server_name ansibletest.manta.systems;
+    server_name {{ inventory_hostname }}.{{ chain }}.systems;
     return 404; # managed by Certbot
 }

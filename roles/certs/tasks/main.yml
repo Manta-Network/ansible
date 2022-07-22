@@ -5,20 +5,30 @@
 
 - name: cert creation
   raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.{{ chain }}.systems"  -m  ops@manta.network  --redirect
+  when: chain == "calamari"
 
-#hostname.dolpin.engineering add it special case
+- name: cert creation
+  raw: certbot run -n --nginx --agree-tos -d "{{ inventory_hostname }}.{{ chain }}.engineering"  -m  ops@manta.network  --redirect
+  when: chain == "dolphin"
 
 #copy over other nginx config
 
-- name: copy over rpc nginx config
-  template: owner=root group=root mode=644
-    src=nginx/rpc.systems.conf
-    dest=/etc/nginx/sites-enabled/rpc.{{ chain }}.systems.conf
+#- name: copy over rpc nginx config
+#  template: owner=root group=root mode=644
+#    src=nginx/rpc.systems.conf
+#    dest=/etc/nginx/sites-enabled/rpc.{{ chain }}.systems.conf
 
 - name: copy over ws nginx config
   template: owner=root group=root mode=644
     src=nginx/ws.systems.conf
     dest=/etc/nginx/sites-enabled/ws.{{ chain }}.systems.conf
+  when: chain == "calamari"
+
+- name: copy over ws nginx config
+  template: owner=root group=root mode=644
+    src=nginx/ws.engineering.conf
+    dest=/etc/nginx/sites-enabled/ws.{{ chain }}.engineering.conf
+  when: chain == "dolphin"
 
 - name: copy over default manta nginx config
   template: owner=root group=root mode=644
@@ -34,7 +44,7 @@
 
 - name: copy over default dolphin nginx config
   template: owner=root group=root mode=644
-    src=nginx/default_calamari
+    src=nginx/default_dolphin
     dest=/etc/nginx/sites-enabled/default
   when: chain == "dolphin"
 
@@ -44,20 +54,20 @@
     dest=/etc/nginx/sites-enabled/status.conf
 
 # cp certs
-- name: Copy rpc fullchain ssl
-  ansible.builtin.copy:
-    src: /home/mobula/certs/rpc.calamari.fullchain.pem
-    dest: /etc/ssl/private/rpc.calamari.fullchain.pem
-    owner: root
-    group: root
-    mode: '0644'
-- name: Copy rpc priv key ssl
-  ansible.builtin.copy:
-    src: /home/mobula/certs/rpc.calamari.privkey.pem
-    dest: /etc/ssl/private/rpc.calamari.privkey.pem
-    owner: root
-    group: root
-    mode: '0644'
+#- name: Copy rpc fullchain ssl
+#  ansible.builtin.copy:
+#    src: /home/mobula/certs/rpc.calamari.fullchain.pem
+#    dest: /etc/ssl/private/rpc.calamari.fullchain.pem
+#    owner: root
+#    group: root
+#    mode: '0644'
+#- name: Copy rpc priv key ssl
+#  ansible.builtin.copy:
+#    src: /home/mobula/certs/rpc.calamari.privkey.pem
+#    dest: /etc/ssl/private/rpc.calamari.privkey.pem
+#    owner: root
+#    group: root
+#    mode: '0644'
 
 - name: Copy ws fullchain ssl
   ansible.builtin.copy:
@@ -66,6 +76,7 @@
     owner: root
     group: root
     mode: '0644'
+  when: chain == "calamari"
 - name: Copy ws priv key ssl
   ansible.builtin.copy:
     src: /home/mobula/certs/ws.calamari.privkey.pem
@@ -73,7 +84,25 @@
     owner: root
     group: root
     mode: '0644'
+  when: chain == "calamari"
 
+- name: Copy ws fullchain ssl
+  ansible.builtin.copy:
+    src: /home/mobula/certs/ws.dolphin.fullchain.pem
+    dest: /etc/ssl/private/ws.dolphin.fullchain.pem
+    owner: root
+    group: root
+    mode: '0644'
+  when: chain == "dolphin"
+
+- name: Copy ws priv key ssl
+  ansible.builtin.copy:
+    src: /home/mobula/certs/ws.dolphin.privkey.pem
+    dest: /etc/ssl/private/ws.dolphin.privkey.pem
+    owner: root
+    group: root
+    mode: '0644'
+  when: chain == "dolphin"
 
 - name: reload nginx
   raw: systemctl reload nginx

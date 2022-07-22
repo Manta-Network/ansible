@@ -3,7 +3,7 @@
 
 - name: Set hostname
   ansible.builtin.hostname:
-    name: "{{ inventory_hostname }}.{{ chain }}.systems"
+    name: "{{ inventory_hostname }}.{{ chain }}.engineering"
 
 - name: setup manta repo
   raw: curl -o /usr/share/keyrings/manta.gpg https://deb.manta.systems/manta.gpg && curl -o /etc/apt/sources.list.d/manta.list https://deb.manta.systems/manta.list && apt update
@@ -13,6 +13,10 @@
     name:
       - manta=3.2.0
     state: present
+
+- name: dolphin symlink fix
+  raw: ln -s /usr/bin/manta /usr/bin/dolphin
+  when: chain == "dolphin"
 
 - name: start and enable "{{ chain }}" service
   raw: systemctl enable --now "{{ chain }}.service"

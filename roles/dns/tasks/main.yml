@@ -1,4 +1,6 @@
-- name: Add dns entry
+#for calamari
+
+- name: Add dns entry systems
   community.aws.route53:
     state: present
     zone: "{{ chain }}.systems"
@@ -9,8 +11,32 @@
     wait: yes
   vars:
     ansible_python_interpreter: /usr/bin/python3
+  when: chain == "calamari"
 
 - wait_for:
     host: "{{ inventory_hostname }}.{{ chain }}.systems"
     port: 80
     delay: 30
+  when: chain == "calamari"
+
+
+#for dolphin
+
+- name: Add dns entry engineering
+  community.aws.route53:
+    state: present
+    zone: "{{ chain }}.engineering"
+    record: "{{ inventory_hostname }}.{{ chain }}.engineering"
+    type: A
+    ttl: 7200
+    value: "{{ ansible_host }}"
+    wait: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  when: chain == "dolphin"
+
+- wait_for:
+    host: "{{ inventory_hostname }}.{{ chain }}.engineering"
+    port: 80
+    delay: 30
+  when: chain == "dolphin"
