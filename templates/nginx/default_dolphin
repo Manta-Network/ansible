@@ -3,7 +3,7 @@ server {
     server_name {{ inventory_hostname }}.{{ chain }}.engineering; # managed by Certbot
 
         location / {
-            proxy_pass http://localhost:9144/;
+            proxy_pass http://localhost:9344/;
             proxy_http_version 1.1;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header Host $host;
@@ -13,7 +13,7 @@ server {
         }
 
     location /health {
-        proxy_pass http://localhost:9133/health;
+        proxy_pass http://localhost:9333/health;
         proxy_http_version 1.1;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header Host $host;
@@ -24,7 +24,7 @@ server {
 
         #rpc
         location /rpc {
-	    proxy_pass http://localhost:9133/;
+	    proxy_pass http://localhost:9333/;
             proxy_http_version 1.1;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header Host $host;
@@ -34,7 +34,7 @@ server {
         }
         #metrics relay
         location /relay/metrics {
-            proxy_pass http://localhost:9616/;
+            proxy_pass http://localhost:9316/;
             proxy_http_version 1.1;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header Host $host;
@@ -44,7 +44,7 @@ server {
         }
         #metrics para
         location /para/metrics {
-            proxy_pass http://localhost:9615/;
+            proxy_pass http://localhost:9315/;
             proxy_http_version 1.1;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header Host $host;

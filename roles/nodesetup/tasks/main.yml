@@ -20,6 +20,7 @@
 
 - name: start and enable "{{ chain }}" service
   raw: systemctl enable --now "{{ chain }}.service"
+  ignore_errors: True
 
 - name: install systools
   raw: apt -y install htop iftop iotop

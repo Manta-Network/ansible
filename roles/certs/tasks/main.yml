@@ -1,5 +1,8 @@
+- name: refresh certbot core
+  raw: snap install core && snap refresh core || true
+
 - name: install certbot
-  raw: snap install core && snap refresh core && snap install --classic certbot && ln -s /snap/bin/certbot /usr/bin/certbot
+  raw: snap install --classic certbot && ln -s /snap/bin/certbot /usr/bin/certbot
 
 #configure cert before copying over nginx configs
 
