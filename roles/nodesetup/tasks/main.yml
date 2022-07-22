@@ -18,6 +18,14 @@
   raw: ln -s /usr/bin/manta /usr/bin/dolphin
   when: chain == "dolphin"
 
+- name: dolphin rococo json fix
+  raw: curl -sLo /usr/share/substrate/rococo.json https://raw.githubusercontent.com/paritytech/polkadot/master/node/service/chain-specs/rococo.json
+  when: chain == "dolphin"
+
+- name: dolphin json fix
+  raw: curl -sLo /usr/share/substrate/dolphin.json https://raw.githubusercontent.com/Manta-Network/Manta/manta/genesis/dolphin-testnet-genesis.json
+  when: chain == "dolphin"
+
 - name: start and enable "{{ chain }}" service
   raw: systemctl enable --now "{{ chain }}.service"
   ignore_errors: True
