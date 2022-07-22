@@ -6,10 +6,13 @@
     name: zabbix-agent2
     state: present
 
-- name: copy over zabix config
-  template: owner=root group=root mode=644
-    src=zabbix_agent2.conf
-    dest=/etc/zabbix/zabbix_agent2.conf
+- name: Copy over zabbix config
+  ansible.builtin.copy:
+    src: /home/mobula/ansible/templates/zabbix_agent2.conf
+    dest: /etc/zabbix/zabbix_agent2.conf
+    owner: root
+    group: root
+    mode: '0644'
 
 - name: restart agent
   raw: systemctl restart zabbix-agent2
