@@ -4,8 +4,8 @@
     ansible_python_interpreter: /usr/bin/python3
   roles:
     - role: nodesetup
-    - role: zabbix
-    - role: authkeys
+#    - role: zabbix
+#    - role: authkeys
 
 - name: dns
   hosts: todeploy
@@ -13,11 +13,11 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   roles:
-    - role: dns
+#    - role: dns
 
 - name: certs setup 
   hosts: todeploy
   vars:
     ansible_python_interpreter: /usr/bin/python3
   roles:
-    - role: certs
+#    - role: certs

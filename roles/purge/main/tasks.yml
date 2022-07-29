@@ -1,0 +1,11 @@
+- name: stop chain and remove packages 
+  raw: systemctl stop calamari && apt remove --purge manta
+  when: chain == "calamari"
+
+- name: stop chain and remove packages
+  raw: systemctl stop dolphin && apt remove --purge manta
+  when: chain == "dolphin"
+
+- name: purge /var/lib/substrate
+  raw: rm -rf /var/lib/substrate
+  when: fullpurge == "yes"

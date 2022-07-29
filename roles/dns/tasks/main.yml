@@ -12,7 +12,7 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   when: chain == "calamari"
-
+  ignore_errors: yes
 - wait_for:
     host: "{{ inventory_hostname }}.{{ chain }}.systems"
     port: 80
@@ -34,7 +34,7 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
   when: chain == "dolphin"
-
+  ignore_errors: yes
 - wait_for:
     host: "{{ inventory_hostname }}.{{ chain }}.engineering"
     port: 80

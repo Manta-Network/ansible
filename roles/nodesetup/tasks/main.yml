@@ -3,7 +3,12 @@
 
 - name: Set hostname
   ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}.{{ chain }}.systems"
+
+- name: Set hostname
+  ansible.builtin.hostname:
     name: "{{ inventory_hostname }}.{{ chain }}.engineering"
+  when: chain == "dolphin"
 
 - name: setup manta repo
   raw: curl -o /usr/share/keyrings/manta.gpg https://deb.manta.systems/manta.gpg && curl -o /etc/apt/sources.list.d/manta.list https://deb.manta.systems/manta.list && apt update
@@ -13,6 +18,19 @@
     name:
       - manta=3.2.0
     state: present
+
+
+- name: prep and mount second disk
+  raw: mkdir /data/ && mkfs.ext4 -F /dev/sdb
+  when: hcloud == "yes"
+
+- name: fstab
+  raw: echo "/dev/sdb /data ext4 defaults 0 0" >> /etc/fstab && mount -a
+  when: hcloud == "yes"
+
+- name: symlink hlcloud dir and chown
+  raw: mkdir /data/substrate && ln -s /var/lib/substrate /data/substrate 
+  when: hcloud == "yes"
 
 - name: dolphin symlink fix
   raw: ln -s /usr/bin/manta /usr/bin/dolphin
