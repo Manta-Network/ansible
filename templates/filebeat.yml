@@ -1,0 +1,20 @@
+filebeat.inputs:
+- type: journald
+  id: calamari
+  include_matches:
+    - _SYSTEMD_UNIT=calamari.service
+  seek: tail
+
+filebeat.config.modules:
+  # Glob pattern for configuration loading
+  path: ${path.config}/modules.d/*.yml
+
+  # Set to true to enable config reloading
+  reload.enabled: false
+
+setup.template.settings:
+  index.number_of_shards: 1
+  
+output.logstash:
+  # The Logstash hosts
+  hosts: ["65.109.32.124:5401"]
