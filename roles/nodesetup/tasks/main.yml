@@ -1,3 +1,11 @@
+#add mobula user and its authkeys
+- name: Add the user mobula
+  raw: adduser --disabled-password --gecos "" mobula
+- name: create ssh dir 
+  raw: mkdir /home/mobula/.ssh && chown -R mobula.mobula /home/mobula/.ssh
+- name: add to sudo
+  raw: adduser mobula sudo && echo 'mobula  ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers && visudo -cf /etc/sudoers
+
 - name: update apt
   raw: apt update
 

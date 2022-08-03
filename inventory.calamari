@@ -1,4 +1,13 @@
 [calamari]
+c1.calamari.systems
+c2.calamari.systems
+#c3.calamari.systems
+#c4.calamari.systems
+f1.calamari.systems
+f2.calamari.systems
+#f3.calamari.systems
+#f4.calamari.systems
+[not]
 avocado.calamari.systems
 bokkeum.calamari.systems
 chilli.calamari.systems

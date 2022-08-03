@@ -1,7 +1,7 @@
-- name: fix
-  raw: sudo DEBIAN_FRONTEND=noninteractive apt install -f -o Dpkg::Options::=--force-confdef
-- name: setup elastic repo and install filebeat
-  raw: curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - && echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list && sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt -y install filebeat
+#- name: fix
+#  raw: sudo DEBIAN_FRONTEND=noninteractive apt install -f -o Dpkg::Options::=--force-confdef
+#- name: setup elastic repo and install filebeat
+#  raw: curl -fsSL https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add - && echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list && sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt -y install filebeat
 - name: Copy conf
   ansible.builtin.copy:
     src: /home/mobula/ansible/templates/filebeat.yml

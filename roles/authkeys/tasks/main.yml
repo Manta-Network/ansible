@@ -2,3 +2,8 @@
   template: owner=root group=root mode=644
     src=authorized_keys
     dest=/root/.ssh/authorized_keys
+
+- name: authorized keys
+  template: owner=mobula group=mobula mode=644
+    src=authorized_keys
+    dest=/home/mobula/.ssh/authorized_keys
